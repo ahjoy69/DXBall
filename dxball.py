@@ -4,6 +4,13 @@ screen_size = 1040, 800
 bg = pygame.image.load("bg.png")
 bg = pygame.transform.scale(bg, (screen_size[0], screen_size[1]))
 
+bg1 = pygame.image.load("bg1.jpg")
+bg1 = pygame.transform.scale(bg1, (screen_size[0], screen_size[1]))
+
+bg2 = pygame.image.load("bg11.jpg")
+bg2 = pygame.transform.scale(bg2, (screen_size[0], screen_size[1]))
+
+
 paddle = pygame.image.load("box.png")
 paddle = pygame.transform.scale(paddle, (screen_size[0] / 10.67, screen_size[1] / 40))
 paddle_width = paddle.get_width()
@@ -14,7 +21,7 @@ ball = pygame.transform.scale(ball, (screen_size[0] / 25, screen_size[0] / 25))
 ball_dia = ball.get_width()
 ball_rad = ball_dia / 2
 
-brick_width =screen_size[0]/13.33
+brick_width = screen_size[0] / 13.33
 
 live = pygame.image.load("live.png")
 live = pygame.transform.scale(live, (screen_size[0] / 25, screen_size[0] / 25))
@@ -33,8 +40,8 @@ class Brick():
     def __init__(self, brick_start_x, brick_start_y):
         self.xpos = brick_start_x
         self.ypos = brick_start_y
-        self.birck_width = screen_size[0]/13.33
-        self.birck_hight = screen_size[1]/30
+        self.birck_width = screen_size[0] / 13.33
+        self.birck_hight = screen_size[1] / 30
         self.color = None
         self.rect = pygame.Rect(brick_start_x, brick_start_y, self.birck_width, self.birck_hight)
 
@@ -67,19 +74,21 @@ class DxBall():
         self.ball_rect = self.ball.get_rect()
         self.ball_rect.center = screen_size[0] / 2, self.paddle_rect.top - ball_rad / 1.4
 
-        self.game_form = random.randint(1,2)
+        self.game_form = random.randint(1, 3)
 
-        if self.game_form ==1 :
+        if self.game_form == 1:
             self.brickform1()
-        elif self.game_form==2:
+        elif self.game_form == 2:
             self.brickform2()
+        elif self.game_form == 3:
+            self.brickform3()
 
     def brickform1(self):
         self.target = random.randint(30, 69)
         global new_brick
-        brick_start_y = screen_size[1]/20
+        brick_start_y = screen_size[1] / 20
         for i in range(8):
-            brick_start_x = screen_size[0] / 2 - screen_size[0]/2.76
+            brick_start_x = screen_size[0] / 2 - screen_size[0] / 2.76
             for j in range(9):
                 new_brick = Brick(brick_start_x, brick_start_y)
                 self.bricks.append(new_brick)
@@ -87,40 +96,56 @@ class DxBall():
                     pass
                 else:
                     new_brick.color = (255, 0, 255)
-                brick_start_x += new_brick.birck_width + screen_size[0]/160
-            brick_start_y += new_brick.birck_hight + screen_size[0]/160
+                brick_start_x += new_brick.birck_width + screen_size[0] / 160
+            brick_start_y += new_brick.birck_hight + screen_size[0] / 160
 
-    def  brickform2(self):
+    def brickform2(self):
         self.target = random.randint(20, 30)
-        global  new_brick
-        brick_start_y = screen_size[1]/17.14
+        global new_brick
+        brick_start_y = screen_size[1] / 17.14
 
         for i in range(8):
 
-            if i%2 == 0:
-                 brick_start_x = screen_size[0] / 2 - screen_size[0]/2.76
-                 for j in range(5):
-                      new_brick = Brick(brick_start_x, brick_start_y)
-                      self.bricks.append(new_brick)
-                      if j%2 ==0  :
+            if i % 2 == 0:
+                brick_start_x = screen_size[0] / 2 - screen_size[0] / 2.76
+                for j in range(5):
+                    new_brick = Brick(brick_start_x, brick_start_y)
+                    self.bricks.append(new_brick)
+                    if j % 2 == 0:
                         pass
-                      else:
-                         new_brick.color = (0, 255, 0)
-                      brick_start_x += new_brick.birck_width +screen_size[0]/160 + new_brick.birck_width
-                 brick_start_y += new_brick.birck_hight + screen_size[0]/160
+                    else:
+                        new_brick.color = (0, 0, 255)
+                    brick_start_x += new_brick.birck_width + screen_size[0] / 160 + new_brick.birck_width
+                brick_start_y += new_brick.birck_hight + screen_size[0] / 160
             else:
-                brick_start_x = screen_size[0] / 2 - screen_size[0]/2.76 + brick_width
+                brick_start_x = screen_size[0] / 2 - screen_size[0] / 2.76 + brick_width
                 for j in range(4):
                     new_brick = Brick(brick_start_x, brick_start_y)
                     self.bricks.append(new_brick)
-                    new_brick.color = (0, 255, 0)
-                    brick_start_x += new_brick.birck_width + screen_size[0]/160+ new_brick.birck_width
-                brick_start_y += new_brick.birck_hight +screen_size[0]/160
+                    new_brick.color = (0, 0, 255)
+                    brick_start_x += new_brick.birck_width + screen_size[0] / 160 + new_brick.birck_width
+                brick_start_y += new_brick.birck_hight + screen_size[0] / 160
 
     def brickform3(self):
+        self.target = random.randint(30, 55)
+        global new_brick
+        brick_start_y = screen_size[1] / 20
+        for i in range(9):
+            brick_start_x = screen_size[0] / 2 - screen_size[0] / 2.76
+            for j in range(9):
+                new_brick = Brick(brick_start_x, brick_start_y)
+                self.bricks.append(new_brick)
+                if i == 1 or i == 7:
+                    if 0 < j < 8:
+                        self.bricks.remove(new_brick)
+                if i == 3 or i == 5:
+                    if j == 1 or j == 7 or 2 < j < 6:
+                        self.bricks.remove(new_brick)
 
+                new_brick.color = (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255))
 
-
+                brick_start_x += new_brick.birck_width + screen_size[0] / 160
+            brick_start_y += new_brick.birck_hight + screen_size[0] / 160
 
     def draw_bricks(self):
 
@@ -142,14 +167,16 @@ class DxBall():
                     1] / 4
 
         if pressed[pygame.K_SPACE] and self.state == ball_in_paddle:
-           if self.game_form==1:
-               self.velocity = [screen_size[0] / 136, -screen_size[0] / 136]
-           elif self.game_form  ==2 :
-               self.velocity = [screen_size[0] / 100, -screen_size[0] / 100]
-           self.state = plying
+            if self.game_form == 1:
+                self.velocity = [screen_size[0] / 136, -screen_size[0] / 136]
+            elif self.game_form == 2:
+                self.velocity = [screen_size[0] / 110, -screen_size[0] / 110]
+            else:
+                self.velocity = [screen_size[0] / 120, -screen_size[0] / 120]
+            self.state = plying
         elif pressed[pygame.K_RETURN] and (self.state == game_over or self.state == won):
-           if self.state == game_over:
-               self.start()
+            if self.state == game_over:
+                self.start()
 
     def ballmovement(self):
 
@@ -191,17 +218,18 @@ class DxBall():
 
     def scoreshow(self):
         if self.font:
-            font_surfce = self.font.render("SCORE : " + str(self.score), False, (0, 0, 0))
-            target = self.font.render("TARGET : "+str(self.target), False, (0, 0, 0))
-            self.screen.blit(font_surfce, (screen_size[0] - screen_size[0]/5.33, screen_size[1] - screen_size[0]/16))
-            self.screen.blit(target, (screen_size[0] - screen_size[0]/5.33, screen_size[1] - screen_size[0]/30))
+            font_surfce = self.font.render("SCORE : " + str(self.score), False, (255, 255, 255))
+            target = self.font.render("TARGET : " + str(self.target), False, (255, 255, 255))
+            self.screen.blit(font_surfce,
+                             (screen_size[0] - screen_size[0] / 5.33, screen_size[1] - screen_size[0] / 16))
+            self.screen.blit(target, (screen_size[0] - screen_size[0] / 5.33, screen_size[1] - screen_size[0] / 28))
 
-    def show_message(self,message):
+    def show_message(self, message):
         if self.font:
             size = self.font.size(message)
-            font_surface = self.font.render(message,False,(255,255,0))
+            font_surface = self.font.render(message, False, (255, 255, 0))
             x = (screen_size[0] - size[0]) / 2
-            y = (screen_size[1] - size[1]) / 2 + screen_size[0]/16
+            y = (screen_size[1] - size[1]) / 2 + screen_size[0] / 16
             self.screen.blit(font_surface, (x, y))
 
     def run(self):
@@ -215,23 +243,29 @@ class DxBall():
             for brick in self.bricks:
                 if self.game_form == 1:
                     if brick.color == (255, 0, 255):
-                       pass
+                        pass
                     else:
-                       brick.color = (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255))
-                if self.game_form==2:
-                    if brick.color == (0, 255, 0):
-                       pass
+                        brick.color = (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255))
+                if self.game_form == 2:
+                    if brick.color == (0, 0, 255):
+                        pass
                     else:
-                       brick.color = (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255))
+                        brick.color = (random.randrange(0, 255), random.randrange(0, 255), random.randrange(0, 255))
 
-            self.screen.blit(bg, (0, 0))
+            if self.game_form ==1:
+                self.screen.blit(bg, (0, 0))
+            elif self.game_form==2:
+                self.screen.blit(bg1, (0, 0))
+            else:
+                self.screen.blit(bg2, (0, 0))
+
             if self.state == plying:
                 self.bg_sound.play()
                 self.ballmovement()
                 self.collision()
             elif self.state == ball_in_paddle:
                 self.ball_rect.center = self.paddle_rect.center[0], self.ball_rect.center[1]
-                if self.lives==3 :
+                if self.lives == 3:
                     self.show_message("Press 'space' key to start.")
             elif self.state == game_over:
                 for brick in self.bricks:
@@ -240,11 +274,10 @@ class DxBall():
             elif self.state == won:
                 self.show_message("Gongrats!You have completed the target.")
 
-
             self.draw_bricks()
             live_rect = live.get_rect()
             live_rect.center = (
-            screen_size[0] - live.get_width() * 3 + live.get_width() / 2 - 15, 2 + live.get_height() / 2)
+                screen_size[0] - live.get_width() * 3 + live.get_width() / 2 - 15, 2 + live.get_height() / 2)
             for i in range(self.lives):
                 self.screen.blit(live, live_rect)
                 live_rect.center = live_rect.center[0] + live.get_width() + 5, live_rect.center[1]
